@@ -1,0 +1,53 @@
+---
+- name: first Playbook
+  hosts: all
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  tasks:
+  - name: Add content in file
+    lineinfile:
+     path: /etc/hosts
+     line: 'ansible.xyzcorp.com  169.168.0.1'
+  - name: installing elnks using package module which identifies distribution on its own
+    package:
+      name: elinks
+      state: present
+  - name: creating user xyzcorp_audit
+    user:
+      name: xyzcorp_audit
+      state: present
+  - name: copying file
+    copy:
+     src: /home/ansible/motd
+     dest: /etc/
+  - name: copy files2
+    copy:
+     src: /home/ansible/issue
+     dest: /etc/
+
+- name: Special Play for nmap-ncat installation
+  hosts: network
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  tasks:
+  - name: installing network nmap-ncat
+    yum:
+     name: nmap-ncat
+     state: latest
+  - name: creating user xyzcorp_network
+    user:
+     name: xyzcorp_network
+     state: present
+
+- name: Special Play for SysAdmin servers
+  hosts: sysadmin
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  tasks:
+  - name: Copying files /home/ansible/scripts.tgz to /mnt/storage
+    copy:
+      src: /home/ansible/scripts.tgz
+      dest: /mnt/storage/ 
