@@ -1,0 +1,15 @@
+---
+- name: sample playbook for facts info
+  hosts: localhost
+  become: true
+  gather_facts: true
+  tasks:
+  - name: "Sample file to write facts"
+    lineinfile:
+      path: /home/ansible/host
+      create: yes
+      line: "{{ ansible_hostname }}"
+  - name: "Displaying magic variable facts from Ansibl gather facts indo"
+    lineinfile:
+      path: /home/ansible/host
+      line: "{{ hostvars['vinaykumarm2c.mylabserver.com']['ansible_default_ipv4']['address'] }}"
