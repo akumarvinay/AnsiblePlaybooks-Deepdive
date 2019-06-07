@@ -1,0 +1,12 @@
+working_dir: /home/ansible/newdir
+
+service_list:
+- one
+- two
+- three
+
+share_paths:
+ nfs: /mnt/nfs
+ cifs: /mnt/cifs
+ iscsi: /mnt/iscsi
+

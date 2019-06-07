@@ -1,0 +1,22 @@
+---
+- name: sample playbook for variables demo
+  hosts: localhost
+  tasks:
+  - name: Creating working dir
+    file:
+      name: "{{ working_dir }}"
+      state: directory
+  - name: adding content from list varaible into a file
+    lineinfile:
+     path: "{{ working_dir }}/service-list.txt"
+     line: "{{ service_list }}"
+     create: yes
+  - name: storing value in register variable
+    command: "ls -al {{ share_paths['nfs'] }}"
+    register: comm_output
+  - name: copying output from previous task into a file through register variables
+    copy:
+     content: "{{ comm_output }}"
+     dest: "{{ working_dir }}/register-out.txt"
+     
+     

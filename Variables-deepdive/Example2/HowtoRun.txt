@@ -1,0 +1,2 @@
+ansible-playbook vars-demo-playbook.yml -e @vars.yml -C   ---> Dry run
+ansible-playbook vars-demo-playbook.yml -e @vars.yml      --> Passing variable file while running/executing playbook 
