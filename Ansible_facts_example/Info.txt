@@ -1,0 +1,2 @@
+info about fact caching:
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#fact-caching
