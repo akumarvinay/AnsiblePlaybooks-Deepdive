@@ -1,0 +1,28 @@
+---
+- name: Handlers demo in Ansible
+  hosts: centos
+  become: yes
+  become_method: sudo
+  vars:
+   log_location: /home/ansible/apacheLog
+   loglevel: error
+  tasks:
+  - name: Installing httpd
+    yum:
+     name: httpd
+     state: present
+  - name: Copying conf file
+    template:
+      src: httpd.conf.j2
+      dest: /etc/httpd/conf/httpd.conf
+    notify: restart httpd
+#  - name: start service
+#    service:
+#      name: httpd
+#      state: started
+  handlers:
+  - name: restart httpd
+    service: 
+      name: httpd
+      state: restarted
+    listen: restart httpd

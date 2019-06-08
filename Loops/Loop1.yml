@@ -1,0 +1,22 @@
+---
+- name: Looping constructs in ansible
+  hosts: localhost 
+  become: yes
+  become_method: sudo
+  gather_facts: true
+  vars_files:
+  - var.yml
+  tasks:
+  - name: Installing apache, git, elinks
+    yum:
+     name: "{{ item }}"
+     state: latest
+    loop:
+    - httpd
+    - git
+    - elinks
+  - name: Starting services
+    service:
+      name: "{{ item }}"
+      state: started
+    loop: "{{ services }}"
