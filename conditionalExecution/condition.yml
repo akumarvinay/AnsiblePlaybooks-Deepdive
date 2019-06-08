@@ -1,0 +1,17 @@
+---
+- name: Validating conditional playbook
+  hosts: Remote
+  vars:
+   filepath: /home/ansible/testfile.txt
+  tasks:
+  - name: stat module to get file info
+    stat:
+      path: "{{ filepath }}"
+    register: filecheck
+  - name: writing file check content into text file
+    copy:
+     content: "{{ filecheck }}"
+     dest: /home/ansible/filecheck.json
+  - name: moving testfile.txt to diff location
+    command: mv "{{ filepath }}" /home/ansible/moved.txt
+    when: filecheck.stat.exists
