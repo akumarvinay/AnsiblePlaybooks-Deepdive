@@ -1,0 +1,25 @@
+---
+- name: Tagging tasks in a Playbook
+  hosts: centos
+  tasks:
+  - name: installing Elinks with help of tag
+    become: yes
+    package:
+     name: elinks
+     state: present
+    tags: 
+    - software
+  - name: Adding line into a file using tag
+    lineinfile:
+     path: /home/ansible/tag-line.txt
+     line: 'Adding new line from playbook'
+     create: yes
+    tags: 
+    - line
+    - setup
+  - name: copying files using tag
+    copy:
+     src: /home/ansible/createdconf.config
+     dest: /home/ansible/createdconf.config
+    tags:
+    - copytag

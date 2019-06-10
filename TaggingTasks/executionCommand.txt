@@ -1,0 +1,3 @@
+ansible-playbook -i ~/inventory Tagging.yml --tags software
+ansible-playbook -i ~/inventory Tagging.yml -t software,line
+ansible-playbook -i ~/inventory Tagging.yml --skip-tags software

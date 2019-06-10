@@ -1,0 +1,11 @@
+---
+- name: Example for ansible vault usage
+  hosts: localhost
+  vars_files:
+  - /home/ansible/passfile
+  tasks:
+  - name: Encyrpted data usage
+    lineinfile:
+     path: /home/ansible/testing.txt
+     create: yes
+     line: "{{password}}"

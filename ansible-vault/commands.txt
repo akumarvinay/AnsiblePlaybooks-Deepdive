@@ -1,0 +1,7 @@
+cd ansible-vault/
+vim vault.yml
+ansible-playbook -i ~/inventory vault.yml ---> Fails saying unable to decrypt vars_files @ ~/passfile
+ansible-vault encrypt ~/passfile --vault-id prod@prompt ---> using prod label and prompt at encryption time
+ansible-playbook -i ~/inventory vault.yml --vault-id prod@prompt  --> This will prompt for password
+cat ~/testing.txt     --> to verify password variable content
+ansible-playbook -i ~/inventory  vault.yml  --vault-id prod@~/pass     ---> this is by adding vault password in a ~/pass file and passing it as --vault-id option label prod
