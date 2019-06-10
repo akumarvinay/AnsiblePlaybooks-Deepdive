@@ -1,0 +1,67 @@
+---
+- name: task1 evaluation
+  hosts: nfs
+  become: yes
+  become_method: sudo
+  vars:
+   share_path: /mnt/nfsroot
+  tasks:
+  - name: Installing nfs-utils
+    package:
+      name: nfs-utils
+      state: present
+  - name: start and enable nfs-server
+    service:
+      name: nfs-server
+      state: started
+      enabled: yes
+  - name: copying template
+    template:
+      src: /home/ansible/exports.j2
+      dest: /etc/exports
+    notify: exportfs com
+  handlers:
+  - name: exportfs com
+    command: exportfs -a
+    listen: exportfs com
+
+#
+#  Using Magic variables
+#
+
+- name: task2 valuation
+  hosts: remote
+  become: yes
+  become_method: sudo
+  vars:
+    nfs_ip : "{{ hostvars['nfs']['ansible_default_ipv4']['address'] }}"
+    nfs_hostname: "{{ hostvars['nfs']['ansible_hostname'] }}"
+  vars_files:
+  - /home/ansible/user-list.txt 
+  tasks:
+  - name: Template copying hosts file
+    template:
+     src: /home/ansible/etc.hosts.j2
+     dest: /etc/hosts
+  - name:  checking file user-agreement.txt exist
+    stat:
+     path: /opt/user-agreement.txt
+    register: existance
+#
+#  Checking Varibles values stored in register variables
+#  using debug module and var attribute
+#
+  - name: debugging value
+    debug:
+      var: existance
+  - name: Creating users through Loop
+    user:
+     name: "{{ item }}"
+     state: present 
+    loop: "{{ users }}"
+    when: existance.stat.exists         
+
+
+    
+
+      
