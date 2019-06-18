@@ -9,3 +9,4 @@
      path: /home/ansible/testing.txt
      create: yes
      line: "{{password}}"
+#Here password variable is from encyrpted file /home/ansibl/passfile 
