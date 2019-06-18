@@ -1,0 +1,20 @@
+---
+- name: ErrorHandling with Ignore Erros and Faled when and changed when
+  hosts: localhost
+  gather_facts: no
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: Installing dummy software
+    yum:
+     name: boron
+     state: present
+    ignore_errors: yes
+  - name: failed when and changed when demo
+    command: /home/ansible/AnsibleVariables/AnsiblePlaybooks-Deepdive/ErrorHandling/askStatusCheck.sh YYYYYYYYYYYYYYYYYYYYYY
+    register: fallback
+    changed_when: "'Changed' in fallback.stdout"
+    failed_when: "'Failed' in fallback.stdout"
+  - name: Debug display
+    debug:
+     var: fallback

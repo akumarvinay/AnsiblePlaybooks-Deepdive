@@ -1,0 +1,21 @@
+---
+- name: Block module sample playbook
+  hosts: localhost
+  become: yes
+  become_method: sudo
+  gather_facts: true
+  vars:
+    servicename: httpd
+  tasks:
+  - name: Block group sample
+    block:
+    - service:
+       name: "{{servicename}}"
+       state: started
+      register: serverinfo
+    rescue:
+    - debug:
+       var: serverinfo
+    always:
+    - debug:
+       msg: "Ensure server is started"
