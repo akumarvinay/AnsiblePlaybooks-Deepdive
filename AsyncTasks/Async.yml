@@ -1,0 +1,11 @@
+---
+- name: async and poll sample playbook
+  hosts: localhost
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  tasks:
+  - name: Validating async and poll
+    command: /home/ansible/sleep.sh
+    async: 10   # Setting time limit for task execution
+    poll: 0     # Checks and returns task execution status to Ansible after each giveen seconds  -> If Set to 0, then it don't wait for task completion
