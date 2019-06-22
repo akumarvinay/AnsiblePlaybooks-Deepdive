@@ -1,0 +1,1 @@
+The run_once keyword allows us to mark a task for only a single execution in a play, no matter how many hosts are targeted. This has select use cases, such as running a script that may only need to be ran one time for a cluster. The keyword is demonstrated in this lesson and a brief discussion is provided as to how run_once interacts with delegate_to and serial.

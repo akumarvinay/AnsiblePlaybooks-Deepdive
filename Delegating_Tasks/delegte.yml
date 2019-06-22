@@ -1,0 +1,21 @@
+---
+- name: Playbook for delegate_to implementation
+  hosts: centos
+  become: yes
+  become_method: sudo
+  gather_facts: false
+  tasks:
+  - name: Installing httpd on only specific host in centos group
+    yum:
+     name: httpd
+     state: latest
+    delegate_to: vinaykumarm2c.mylabserver.com
+  - name: Installing maria db on all servers
+    package:
+     name: mariadb
+     state: present
+  - name: locationaction check
+    local_action: command pwd
+    register: var1
+  - debug:
+     var: var1

@@ -1,0 +1,1 @@
+Ansible allows for the execution of tasks exclusively on specific hosts as needed. The delegate_to keyword takes a host which a task will be ran against. The delegation of a task with localhost may be delegated to using the shorthand local_action. Both approaches to this are discussed in this lesson.
