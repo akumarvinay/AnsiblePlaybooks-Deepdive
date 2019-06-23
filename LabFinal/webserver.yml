@@ -1,0 +1,42 @@
+---
+- name: "Webserver playbook"
+  hosts: webservers
+  become: yes
+  become_method: sudo
+  gather_facts: true
+  vars_files:
+  - /home/ansible/confidential
+  tasks:
+  - name: Installing httpd
+    package:
+     name: httpd
+     state: latest
+    tags:
+    - base-intall
+  - name: configuring template
+    template:
+      src: /home/ansible/vhost.conf.j2
+      dest: /etc/httpd/conf.d/vhost.conf
+    notify: restart server
+    tags:
+    - vhost
+  - name: configuring sit host
+    template:
+      src: /home/ansible/htpasswd.j2
+      dest: /etc/httpd/conf/htpasswd
+    notify: restart server
+    tags:
+    - vhost
+  - name: Running script data-job
+    command: /opt/data-job.sh
+    async: 200
+    poll: 0
+    tags:
+    - data-job
+  handlers:
+  - name: restart server 
+    service:
+      name: httpd
+      enabled: true
+      state: restarted
+    listen: restart server
